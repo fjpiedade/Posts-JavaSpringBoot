@@ -1,7 +1,7 @@
 
 ## Java Spring Framework
 
-This project manager #Posts and #Comment their #Owner.
+This project manager #Posts and #Comments its #Owner.
 Many aspects and features of the Spring platform have been richly implemented.
 
 - API RESTful based REST implementation (4 Level of Richardson Model ).
