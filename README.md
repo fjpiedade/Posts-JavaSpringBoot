@@ -6,6 +6,9 @@ Many aspects and features of the Spring platform have been richly implemented.
 
 - API RESTful based REST implementation (4 Level of Richardson Model ).
 - Models
+-- [ ] Posts
+-- [ ] Comments
+-- [ ] Owner
 - Repositories
 - Services
 - Controllers
