@@ -22,6 +22,9 @@ DIAGRAM
 
 <img width="897" alt="Screen Shot 2022-07-13 at 11 00 18 AM" src="https://user-images.githubusercontent.com/82730685/178707392-75140e30-21a6-48b7-ba5e-9cdb4fd76efb.png">
 
+ER DIAGRAM - PostgreSQL
+
+![ER](https://user-images.githubusercontent.com/82730685/178718611-79268251-2c42-457e-81b5-2cc3d0dad192.png)
 
 
 API REST IMPLEMENTED
