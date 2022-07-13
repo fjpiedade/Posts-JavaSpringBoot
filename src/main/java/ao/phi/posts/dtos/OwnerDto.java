@@ -1,29 +1,13 @@
-package ao.phi.posts.model;
+package ao.phi.posts.dtos;
 
-import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 import java.time.LocalDateTime;
-import java.util.UUID;
 
-@Entity
-@Table(name = "tb_owner")
-public class OwnerModel {
-    //Model represent Owner of Comments about specific Post or Comments
-
-    @Id
-    @GeneratedValue( strategy = GenerationType.AUTO)
-    private UUID id_Owner;
-    @Column(nullable = false)
+public class OwnerDto {
+    @NotBlank
     private String name;
     private String email;
     private LocalDateTime dateRegister;
-
-    public UUID getId_Owner() {
-        return id_Owner;
-    }
-
-    public void setId_Owner(UUID id_Owner) {
-        this.id_Owner = id_Owner;
-    }
 
     public String getName() {
         return name;

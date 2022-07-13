@@ -16,10 +16,11 @@ public class PostModel extends RepresentationModel<PostModel> implements Seriali
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID idpost;
-    @Column(nullable = false, unique = true, length = 30)
+    @Column(nullable = false, unique = true, length = 50)
     private String title;
-    private String comment;
-    private String path;
+    private String description;
+    private String link;
+    private UUID id_owner;
     private LocalDateTime registerDate;
 
     public UUID getIdpost() {
@@ -38,20 +39,28 @@ public class PostModel extends RepresentationModel<PostModel> implements Seriali
         this.title = title;
     }
 
-    public String getComment() {
-        return comment;
+    public String getDescription() {
+        return description;
     }
 
-    public void setComment(String comment) {
-        this.comment = comment;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
-    public String getPath() {
-        return path;
+    public String getLink() {
+        return link;
     }
 
-    public void setPath(String path) {
-        this.path = path;
+    public void setLink(String link) {
+        this.link = link;
+    }
+
+    public UUID getId_owner() {
+        return id_owner;
+    }
+
+    public void setId_owner(UUID id_owner) {
+        this.id_owner = id_owner;
     }
 
     public LocalDateTime getRegisterDate() {
