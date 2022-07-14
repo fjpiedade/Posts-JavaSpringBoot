@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
 import java.awt.print.Pageable;
 import java.util.List;
+import java.util.UUID;
 
 @Service
 public class PostService {
@@ -17,7 +18,7 @@ public class PostService {
     //PostRepository postRepository;
 
     //alternate
-    final PostRepository postRepository;
+    /*final PostRepository postRepository;
     public PostService(PostRepository postRepository){
         this.postRepository = postRepository;
     }
@@ -34,4 +35,11 @@ public class PostService {
     public Page<PostModel> findAll(Pageable pageable) {
         return postRepository.findAll((org.springframework.data.domain.Pageable) pageable);
     }
+
+//    public List<PostModel> getPostByIdOwner(UUID id_owner){
+//        return postRepository.findByIdOwner(id_owner);
+//    }
+
+
+     */
 }

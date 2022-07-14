@@ -5,27 +5,33 @@ import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Entity
-@Table(name = "tb_comments")
+@Table(name = "tb_comment")
 public class CommentModel {
     //manager all comments - Entity represent
     private static final long serialVersionUID = 1L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private UUID id_comment;
+    private UUID idcomment;
+
     @Column(nullable = false)
     private String description;
-    private UUID id_owner;
-    private UUID id_post;
     private LocalDateTime dateRegister;
 
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "idowner", referencedColumnName = "idowner")
+    private OwnerModel owner;
 
-    public UUID getId_comment() {
-        return id_comment;
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "idpost", referencedColumnName = "idpost")
+    private PostModel post;
+
+    public UUID getIdcomment() {
+        return idcomment;
     }
 
-    public void setId_comment(UUID id_comment) {
-        this.id_comment = id_comment;
+    public void setIdcomment(UUID idcomment) {
+        this.idcomment = idcomment;
     }
 
     public String getDescription() {
@@ -44,19 +50,19 @@ public class CommentModel {
         this.dateRegister = dateRegister;
     }
 
-    public UUID getId_owner() {
-        return id_owner;
+    public OwnerModel getOwner() {
+        return owner;
     }
 
-    public void setId_owner(UUID id_owner) {
-        this.id_owner = id_owner;
+    public void setOwner(OwnerModel owner) {
+        this.owner = owner;
     }
 
-    public UUID getId_post() {
-        return id_post;
+    public PostModel getPost() {
+        return post;
     }
 
-    public void setId_post(UUID id_post) {
-        this.id_post = id_post;
+    public void setPost(PostModel post) {
+        this.post = post;
     }
 }
