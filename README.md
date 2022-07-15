@@ -12,7 +12,11 @@ Many aspects and features of the Spring platform have been richly implemented.
 - DTOS
 - Global Configurations
 
-Custom endpoints, Hateos implementation, Model Relationships, Validations, Pagination and Sorting.
+- [x] Custom endpoints 
+- [x] Hateos implementation
+- [x] Model Relationships
+- [x] Validations
+- [x] Pagination and Sorting
 
 Database Configuration for PostgreSQL Connectivity, auto-generator of migrations.
 
