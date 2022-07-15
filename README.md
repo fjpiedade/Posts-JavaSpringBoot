@@ -5,14 +5,14 @@ This project manager #Posts and #Comments its #Owner.
 Many aspects and features of the Spring platform have been richly implemented.
 
 - API RESTful based REST implementation (4 Level of Richardson Model ).
-- Models [ ] Owner [x] Post [ ] Comment 
+- Models [x] Owner [x] Post [x] Comment 
 - Repositories
 - Services
 - Controllers
 - DTOS
 - Global Configurations
 
-Custom endpoints, Hateos implementation, Model Relationships, and Validations.
+Custom endpoints, Hateos implementation, Model Relationships, Validations, Pagination and Sorting.
 
 Database Configuration for PostgreSQL Connectivity, auto-generator of migrations.
 
