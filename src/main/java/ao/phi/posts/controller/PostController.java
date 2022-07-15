@@ -27,7 +27,7 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 @RestController
-@CrossOrigin(origins = "*", maxAge = 3600)
+//@CrossOrigin(origins = "*", maxAge = 3600)
 public class PostController {
 
     @Autowired
@@ -128,18 +128,22 @@ public class PostController {
 //        //return new ResponseEntity<List<PostModel>>(postbyOwner, HttpStatus.OK);
 //    }
 
+    @GetMapping("/post")
+    public List<PostModel> showPosts(){
+        return postRepository.findAll();
+    }
+
     @PostMapping("/post/owner")
-    public PostModel savePostV2(@RequestBody @Valid PostModel post, @RequestBody String strIDowner){
-        UUID idowner =  UUID.fromString(strIDowner);
-        OwnerModel owner = ownerRepository.findById(idowner).get();
-        post.assignOwner(owner);
+    public PostModel savePost(@RequestBody PostModel post){
+        post.setRegisterDate(LocalDateTime.now(ZoneId.of("UTC")));
         return postRepository.save(post);
     }
 
-    @RequestMapping(value="/post/owner/v1",method = RequestMethod.POST)
-    public PostModel requestPOST( @RequestBody PostModel post){
-        OwnerModel owner1 = ownerRepository.findById(post.getIdowner1()).get();
-        post.assignOwner(owner1);
+    @PutMapping("post/{idpost}/owner/{idowner}")
+    public PostModel updatePostWithOwner(@PathVariable Long idpost, @PathVariable Long idowner){
+        PostModel post = postRepository.findById(idpost).get();
+        OwnerModel owner = ownerRepository.findById(idowner).get();
+        post.assignOwner(owner);
         return postRepository.save(post);
     }
 }

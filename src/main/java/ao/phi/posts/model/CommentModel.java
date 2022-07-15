@@ -1,5 +1,6 @@
 package ao.phi.posts.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.UUID;
@@ -12,25 +13,25 @@ public class CommentModel {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private UUID idcomment;
+    private Long idcomment;
 
     @Column(nullable = false)
     private String description;
     private LocalDateTime dateRegister;
 
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "idowner", referencedColumnName = "idowner")
-    private OwnerModel owner;
+//    @ManyToOne(cascade = CascadeType.ALL)
+//    @JoinColumn(name = "idowner", referencedColumnName = "idowner")
+//    private OwnerModel owner;
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "idpost", referencedColumnName = "idpost")
     private PostModel post;
 
-    public UUID getIdcomment() {
+    public Long getIdcomment() {
         return idcomment;
     }
 
-    public void setIdcomment(UUID idcomment) {
+    public void setIdcomment(Long idcomment) {
         this.idcomment = idcomment;
     }
 
@@ -50,19 +51,15 @@ public class CommentModel {
         this.dateRegister = dateRegister;
     }
 
-    public OwnerModel getOwner() {
-        return owner;
-    }
-
-    public void setOwner(OwnerModel owner) {
-        this.owner = owner;
-    }
-
     public PostModel getPost() {
         return post;
     }
 
     public void setPost(PostModel post) {
         this.post = post;
+    }
+
+    public void assignPost(PostModel post) {
+        this.post=post;
     }
 }

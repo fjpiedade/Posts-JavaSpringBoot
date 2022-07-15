@@ -11,7 +11,7 @@ public class PostDto {
     private String title;
     private String description;
     private String link;
-    private UUID id_owner;
+    //private UUID id_owner;
     private LocalDateTime dateRegister;
 
     public String getTitle() {
@@ -38,13 +38,13 @@ public class PostDto {
         this.link = link;
     }
 
-    public UUID getId_owner() {
-        return id_owner;
-    }
-
-    public void setId_owner(UUID id_owner) {
-        this.id_owner = id_owner;
-    }
+//    public UUID getId_owner() {
+//        return id_owner;
+//    }
+//
+//    public void setId_owner(UUID id_owner) {
+//        this.id_owner = id_owner;
+//    }
 
     public LocalDateTime getDateRegister() {
         return dateRegister;

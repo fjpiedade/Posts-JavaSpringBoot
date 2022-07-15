@@ -9,6 +9,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.List;
 
 @RestController
@@ -16,17 +18,20 @@ public class OwnerController {
     @Autowired
     OwnerRepository ownerRepository;
 
-    @GetMapping("/owners")
-    public ResponseEntity<List<OwnerModel>> getAllOwner(){
-        List<OwnerModel> owners = ownerRepository.findAll();
-        if(owners.isEmpty()){
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-        return new ResponseEntity<List<OwnerModel>>(ownerRepository.findAll(), HttpStatus.OK);
-    }
+    @GetMapping("/owner")
+    public List<OwnerModel> showOwner(){
+        //List<OwnerModel> owners = ownerRepository.findAll();
+        //if(owners.isEmpty()){
+            //return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        //}
+        //return new ResponseEntity<List<OwnerModel>>(ownerRepository.findAll(), HttpStatus.OK);
+        return ownerRepository.findAll();
+   }
 
-    @PostMapping("/owners")
-    public ResponseEntity<OwnerModel> saveOwner(@RequestBody OwnerModel owner){
-        return new ResponseEntity<OwnerModel>(ownerRepository.save(owner), HttpStatus.CREATED);
+    @PostMapping("/owner")
+    public OwnerModel saveOwner(@RequestBody OwnerModel owner){
+        owner.setDateRegister(LocalDateTime.now(ZoneId.of("UTC")));
+        //return new List<OwnerModel>(ownerRepository.save(owner), HttpStatus.CREATED) {
+        return ownerRepository.save(owner);
     }
 }
