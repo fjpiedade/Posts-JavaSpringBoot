@@ -11,9 +11,11 @@ Many aspects and features of the Spring platform have been richly implemented.
 - Controllers
 - DTOS
 - Global Configurations
+- 
+Feature implemented on this API REST
 
 - [x] Custom endpoints 
-- [x] Hateos implementation
+- [x] Hateos
 - [x] Model Relationships
 - [x] Validations
 - [x] Pagination and Sorting
