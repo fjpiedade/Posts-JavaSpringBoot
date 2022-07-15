@@ -27,7 +27,7 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 @RestController
-//@CrossOrigin(origins = "*", maxAge = 3600)
+@CrossOrigin(origins = "*", maxAge = 3600)
 public class PostController {
 
     @Autowired
@@ -42,41 +42,41 @@ public class PostController {
         if(postModelList.isEmpty()){
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-//        else {
-//            for (PostModel post: postModelList){
-//                UUID id = post.getIdpost();
-//                post.add(linkTo(methodOn(PostController.class).getOnePost(id)).withSelfRel());
-//            }
-//        }
-        //return new ResponseEntity<List<PostModel>>(postRepository.findAll(), HttpStatus.OK);
-        return new ResponseEntity<List<PostModel>>(postModelList,HttpStatus.OK);
+        else {
+            for (PostModel post: postModelList){
+                long id = post.getIdpost();
+                post.add(linkTo(methodOn(PostController.class).getOnePost(id)).withSelfRel());
+            }
+        }
+        return new ResponseEntity<List<PostModel>>(postRepository.findAll(), HttpStatus.OK);
+        //return new ResponseEntity<List<PostModel>>(postModelList,HttpStatus.OK);
     }
 
-//    @GetMapping("/posts/{id}")
-//    public ResponseEntity<PostModel> getOnePost(@PathVariable(value="id")UUID id){
-//        Optional<PostModel> postOne = postRepository.findById(id);
-//        if (postOne.isEmpty()){
-//            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-//        }
-//        //return new ResponseEntity<PostModel>(postOne.get(),HttpStatus.OK);
-//        postOne.get().add(linkTo(methodOn(PostController.class).getAllPosts()).withRel("Post List"));
-//        return new ResponseEntity<PostModel>(postOne.get(),HttpStatus.OK);
-//    }
+    @GetMapping("/posts/{id}")
+    public ResponseEntity<PostModel> getOnePost(@PathVariable(value="id") long id){
+        Optional<PostModel> postOne = postRepository.findById(id);
+        if (postOne.isEmpty()){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        //return new ResponseEntity<PostModel>(postOne.get(),HttpStatus.OK);
+        postOne.get().add(linkTo(methodOn(PostController.class).getAllPosts()).withRel("Post List"));
+        return new ResponseEntity<PostModel>(postOne.get(),HttpStatus.OK);
+    }
 //
 //    @PostMapping("/posts")
 //    public ResponseEntity<PostModel>savePost(@RequestBody @Valid PostModel post){
 //        return new ResponseEntity<PostModel>(postRepository.save(post), HttpStatus.CREATED);
 //    }
 //
-//    @DeleteMapping("/posts/{id}")
-//    public ResponseEntity<?> deletePost(@PathVariable(value = "id") UUID id){
-//        Optional<PostModel> postDelete = postRepository.findById(id);
-//        if (postDelete.isEmpty()){
-//            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-//        }
-//        postRepository.delete(postDelete.get());
-//        return new ResponseEntity<>(HttpStatus.OK);
-//    }
+    @DeleteMapping("/posts/{id}")
+    public ResponseEntity<?> deletePost(@PathVariable(value = "id") Long id){
+        Optional<PostModel> postDelete = postRepository.findById(id);
+        if (postDelete.isEmpty()){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        postRepository.delete(postDelete.get());
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
 //
 //    @PutMapping("/posts/{id}")
 //    public ResponseEntity<PostModel> updatePost(@PathVariable(value="id") UUID id,
