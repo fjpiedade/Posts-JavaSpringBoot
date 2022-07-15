@@ -1,13 +1,16 @@
 package ao.phi.posts.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.springframework.hateoas.RepresentationModel;
+
 import javax.persistence.*;
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Entity
 @Table(name = "tb_comment")
-public class CommentModel {
+public class CommentModel extends RepresentationModel<PostModel> implements Serializable {
     //manager all comments - Entity represent
     private static final long serialVersionUID = 1L;
 
