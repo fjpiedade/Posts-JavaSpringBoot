@@ -33,3 +33,7 @@ API REST IMPLEMENTED
 
 <img width="1110" alt="Screen Shot 2022-07-11 at 9 34 34 AM" src="https://user-images.githubusercontent.com/82730685/178223051-eaea2c03-5c0a-45d1-937c-f3e42aac390a.png">
 
+![Screen Shot 2022-07-15 at 11 24 27 PM](https://user-images.githubusercontent.com/82730685/179320443-8974647d-8c37-4c50-8a75-b7d293d7f7d2.png)
+
+![Screen Shot 2022-07-15 at 11 24 14 PM](https://user-images.githubusercontent.com/82730685/179320463-58f3c563-2641-4dc3-8313-339abc4753cc.png)
+
