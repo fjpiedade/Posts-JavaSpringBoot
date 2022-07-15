@@ -20,11 +20,13 @@ Database Configuration for PostgreSQL Connectivity, auto-generator of migrations
 
 DIAGRAM
 
-<img width="897" alt="Screen Shot 2022-07-13 at 11 00 18 AM" src="https://user-images.githubusercontent.com/82730685/178707392-75140e30-21a6-48b7-ba5e-9cdb4fd76efb.png">
+<img width="896" alt="Screen Shot 2022-07-15 at 1 36 27 PM" src="https://user-images.githubusercontent.com/82730685/179224338-bf98c610-9197-46ef-b77d-8ec6b2eb715a.png">
+
 
 ER DIAGRAM - PostgreSQL
 
-![ER](https://user-images.githubusercontent.com/82730685/178718611-79268251-2c42-457e-81b5-2cc3d0dad192.png)
+<img width="736" alt="Screen Shot 2022-07-15 at 1 35 15 PM" src="https://user-images.githubusercontent.com/82730685/179224362-0d5eb6ee-033f-4613-a6a1-339e3c8927e8.png">
+
 
 
 API REST IMPLEMENTED
