@@ -1,18 +1,21 @@
 package ao.phi.posts.dtos;
 
+import ao.phi.posts.model.OwnerModel;
+
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.time.LocalDateTime;
-import java.util.UUID;
 
 public class PostDto {
-    @NotBlank
-    @Size(max = 20)
+    @NotNull(message = "Title shouldn't be null")
+    @NotBlank(message = "Title shouldn't be Blank")
+    @Size(max = 50, message = "Title shouldn't has more than 50 letters")
     private String title;
     private String description;
     private String link;
-    //private UUID id_owner;
-    private LocalDateTime dateRegister;
+    private LocalDateTime registerDate;
+    private OwnerModel owner;
 
     public String getTitle() {
         return title;
@@ -38,19 +41,19 @@ public class PostDto {
         this.link = link;
     }
 
-//    public UUID getId_owner() {
-//        return id_owner;
-//    }
-//
-//    public void setId_owner(UUID id_owner) {
-//        this.id_owner = id_owner;
-//    }
-
-    public LocalDateTime getDateRegister() {
-        return dateRegister;
+    public LocalDateTime getRegisterDate() {
+        return registerDate;
     }
 
-    public void setDateRegister(LocalDateTime dateRegister) {
-        this.dateRegister = dateRegister;
+    public void setRegisterDate(LocalDateTime registerDate) {
+        this.registerDate = registerDate;
+    }
+
+    public OwnerModel getOwner() {
+        return owner;
+    }
+
+    public void setOwner(OwnerModel owner) {
+        this.owner = owner;
     }
 }

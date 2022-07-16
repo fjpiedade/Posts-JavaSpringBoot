@@ -21,7 +21,6 @@ import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
 
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
@@ -36,14 +35,16 @@ public class PostController {
     @Autowired
     OwnerRepository ownerRepository;
 
+    @Autowired
+    PostService postService;
+
     @GetMapping("/posts")
-    public ResponseEntity<List<PostModel>> getAllPosts(){
+    public ResponseEntity<List<PostModel>> getAllPosts() {
         List<PostModel> postModelList = postRepository.findAll();
-        if(postModelList.isEmpty()){
+        if (postModelList.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-        else {
-            for (PostModel post: postModelList){
+        } else {
+            for (PostModel post : postModelList) {
                 long id = post.getIdpost();
                 post.add(linkTo(methodOn(PostController.class).getOnePost(id)).withSelfRel());
             }
@@ -53,31 +54,33 @@ public class PostController {
     }
 
     @GetMapping("/posts/{id}")
-    public ResponseEntity<PostModel> getOnePost(@PathVariable(value="id") long id){
+    public ResponseEntity<PostModel> getOnePost(@PathVariable(value = "id") long id) {
         Optional<PostModel> postOne = postRepository.findById(id);
-        if (postOne.isEmpty()){
+        if (postOne.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
         //return new ResponseEntity<PostModel>(postOne.get(),HttpStatus.OK);
         postOne.get().add(linkTo(methodOn(PostController.class).getAllPosts()).withRel("Post List"));
-        return new ResponseEntity<PostModel>(postOne.get(),HttpStatus.OK);
+        return new ResponseEntity<PostModel>(postOne.get(), HttpStatus.OK);
     }
-//
+
+    //
 //    @PostMapping("/posts")
 //    public ResponseEntity<PostModel>savePost(@RequestBody @Valid PostModel post){
 //        return new ResponseEntity<PostModel>(postRepository.save(post), HttpStatus.CREATED);
 //    }
 //
     @DeleteMapping("/posts/{id}")
-    public ResponseEntity<?> deletePost(@PathVariable(value = "id") Long id){
+    public ResponseEntity<?> deletePost(@PathVariable(value = "id") Long id) {
         Optional<PostModel> postDelete = postRepository.findById(id);
-        if (postDelete.isEmpty()){
+        if (postDelete.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
         postRepository.delete(postDelete.get());
         return new ResponseEntity<>(HttpStatus.OK);
     }
-//
+
+    //
 //    @PutMapping("/posts/{id}")
 //    public ResponseEntity<PostModel> updatePost(@PathVariable(value="id") UUID id,
 //    @RequestBody @Valid PostModel post){
@@ -98,16 +101,16 @@ public class PostController {
 //    }
 //
 //    //Post with Service
-//    @PostMapping("/posts/v1")
-//    public ResponseEntity<Object>savePostV1(@RequestBody @Valid PostDto postDto){
+    @PostMapping("/posts/v1")
+    public ResponseEntity<Object> savePostV1(@RequestBody @Valid PostDto postDto) {
 //        if (postService.existsByTitle(postDto.getTitle())){
 //            return ResponseEntity.status(HttpStatus.CONFLICT).body("Conflict: Title is already Exist!");
 //        }
-//        var postModel = new PostModel();
-//        BeanUtils.copyProperties(postDto, postModel);
-//        postModel.setRegisterDate(LocalDateTime.now(ZoneId.of("UTC")));
-//        return ResponseEntity.status(HttpStatus.CREATED).body(postService.save(postModel));
-//    }
+        var postModel = new PostModel();
+        BeanUtils.copyProperties(postDto, postModel);
+        postModel.setRegisterDate(LocalDateTime.now(ZoneId.of("UTC")));
+        return ResponseEntity.status(HttpStatus.CREATED).body(postService.save(postModel));
+    }
 //
 //    //All Posts with Pageable
 //    @GetMapping("/posts/v1")
@@ -115,7 +118,8 @@ public class PostController {
 //        return ResponseEntity.status(HttpStatus.OK).body(postService.findAll(pageable));
 //    }
 //
-//    //Post by Owner
+
+//    Post by Owner
 //    @GetMapping("/posts/{id}/owner")
 //    public List<PostModel> getPostByOwner(@PathVariable(value="id")UUID id){
 //        List<PostModel> postbyOwner = postService.getPostByIdOwner(id);
@@ -129,18 +133,18 @@ public class PostController {
 //    }
 
     @GetMapping("/post")
-    public List<PostModel> showPosts(){
+    public List<PostModel> showPosts() {
         return postRepository.findAll();
     }
 
     @PostMapping("/post/owner")
-    public PostModel savePost(@RequestBody PostModel post){
+    public PostModel savePost(@RequestBody PostModel post) {
         post.setRegisterDate(LocalDateTime.now(ZoneId.of("UTC")));
         return postRepository.save(post);
     }
 
     @PutMapping("post/{idpost}/owner/{idowner}")
-    public PostModel updatePostWithOwner(@PathVariable Long idpost, @PathVariable Long idowner){
+    public PostModel updatePostWithOwner(@PathVariable Long idpost, @PathVariable Long idowner) {
         PostModel post = postRepository.findById(idpost).get();
         OwnerModel owner = ownerRepository.findById(idowner).get();
         post.assignOwner(owner);

@@ -11,6 +11,7 @@ import java.util.UUID;
 
 @Repository
 public interface PostRepository extends JpaRepository<PostModel, Long> {
+    PostModel findByIdPost(Long id);
     //boolean existsByTitle(String title);
     //List<PostModel> findByIdOwner(UUID uuid);
 }
