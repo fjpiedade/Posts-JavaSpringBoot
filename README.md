@@ -4,6 +4,12 @@
 This project manager #Posts and #Comments its #Owner.
 Many aspects and features of the Spring platform have been richly implemented.
 
+- [x] Spring Boot 
+- [x] Spring MVC
+- [x] Spring Data JPA
+- [x] Spring Validation
+- [x] Spring Security - TBD ... next days
+
 - API RESTful based REST implementation (4 Level of Richardson Model ).
 - Models [x] Owner [x] Post [x] Comment 
 - Repositories
