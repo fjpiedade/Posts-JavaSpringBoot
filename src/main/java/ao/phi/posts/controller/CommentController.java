@@ -82,7 +82,7 @@ public class CommentController {
 
     @PostMapping("/comment")
     public ResponseEntity<CommentModel> createComment(@RequestBody CommentModel comment) {
-        comment.setDateRegister(LocalDateTime.now(ZoneId.of("UTC")));
+        comment.setCreatedAt(LocalDateTime.now(ZoneId.of("UTC")));
         return new ResponseEntity<CommentModel>(commentRepository.save(comment), HttpStatus.OK);
     }
 

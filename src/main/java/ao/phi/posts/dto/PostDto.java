@@ -1,6 +1,4 @@
-package ao.phi.posts.dtos;
-
-import ao.phi.posts.model.OwnerModel;
+package ao.phi.posts.dto;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;

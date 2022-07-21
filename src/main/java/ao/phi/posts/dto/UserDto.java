@@ -1,18 +1,17 @@
-package ao.phi.posts.dtos;
+package ao.phi.posts.dto;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Pattern;
 import java.time.LocalDateTime;
 
-public class OwnerDto {
+public class UserDto {
     @NotNull(message = "Name shouldn't be Null")
     @NotBlank(message = "Name shouldn't be Blank")
     private String name;
     @Email(message = "Email isn't valid")
     private String email;
-    private LocalDateTime dateRegister;
+    private LocalDateTime createdAt;
 
     //Validation phone number
     //@Pattern(regexp = "^\\d{10}$")
@@ -34,11 +33,11 @@ public class OwnerDto {
         this.email = email;
     }
 
-    public LocalDateTime getDateRegister() {
-        return dateRegister;
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
     }
 
-    public void setDateRegister(LocalDateTime dateRegister) {
-        this.dateRegister = dateRegister;
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
     }
 }

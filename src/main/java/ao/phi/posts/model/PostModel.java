@@ -8,9 +8,7 @@ import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
-import java.util.UUID;
 
 @Entity
 @Table(name = "tb_post")
@@ -19,29 +17,29 @@ public class PostModel extends RepresentationModel<PostModel> implements Seriali
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long idpost;
+    private Long postId;
 
     @Column(nullable = false, unique = true, length = 50)
     private String title;
     private String description;
     private String link;
-    private LocalDateTime registerDate;
+    private LocalDateTime createdAt;
 
     //@JsonIgnore
     @ManyToOne()
-    @JoinColumn(name = "idowner")
-    private OwnerModel owner;
+    @JoinColumn(name = "userId")
+    private UserModel user;
 
     @JsonIgnore
     @OneToMany(mappedBy = "post")
     private Set<CommentModel> comment = new HashSet<>();
 
-    public Long getIdpost() {
-        return idpost;
+    public Long getPostId() {
+        return postId;
     }
 
-    public void setIdpost(Long idpost) {
-        this.idpost = idpost;
+    public void setPostId(Long postId) {
+        this.postId = postId;
     }
 
     public String getTitle() {
@@ -68,20 +66,20 @@ public class PostModel extends RepresentationModel<PostModel> implements Seriali
         this.link = link;
     }
 
-    public LocalDateTime getRegisterDate() {
-        return registerDate;
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
     }
 
-    public void setRegisterDate(LocalDateTime registerDate) {
-        this.registerDate = registerDate;
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
     }
 
-    public OwnerModel getOwner() {
-        return owner;
+    public UserModel getUser() {
+        return user;
     }
 
-    public void setOwner(OwnerModel owner) {
-        this.owner = owner;
+    public void setUser(UserModel user) {
+        this.user = user;
     }
 
     public Set<CommentModel> getComment() {
@@ -92,7 +90,7 @@ public class PostModel extends RepresentationModel<PostModel> implements Seriali
         this.comment = comment;
     }
 
-    public void assignOwner(OwnerModel owner) {
-        this.owner=owner;
+    public void assignUser(UserModel user) {
+        this.user=user;
     }
 }

@@ -1,12 +1,10 @@
 package ao.phi.posts.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.hateoas.RepresentationModel;
 
 import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDateTime;
-import java.util.UUID;
 
 @Entity
 @Table(name = "tb_comment")
@@ -20,14 +18,18 @@ public class CommentModel extends RepresentationModel<PostModel> implements Seri
 
     @Column(nullable = false)
     private String description;
-    private LocalDateTime dateRegister;
+    private LocalDateTime createdAt;
 
 //    @ManyToOne(cascade = CascadeType.ALL)
 //    @JoinColumn(name = "idowner", referencedColumnName = "idowner")
 //    private OwnerModel owner;
 
+    @ManyToOne()
+    @JoinColumn(name = "userId")
+    private UserModel user;
+
     @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "idpost", referencedColumnName = "idpost")
+    @JoinColumn(name = "postId", referencedColumnName = "postId")
     private PostModel post;
 
     public Long getIdcomment() {
@@ -46,12 +48,12 @@ public class CommentModel extends RepresentationModel<PostModel> implements Seri
         this.description = description;
     }
 
-    public LocalDateTime getDateRegister() {
-        return dateRegister;
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
     }
 
-    public void setDateRegister(LocalDateTime dateRegister) {
-        this.dateRegister = dateRegister;
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
     }
 
     public PostModel getPost() {
@@ -60,6 +62,14 @@ public class CommentModel extends RepresentationModel<PostModel> implements Seri
 
     public void setPost(PostModel post) {
         this.post = post;
+    }
+
+    public UserModel getUser() {
+        return user;
+    }
+
+    public void setUser(UserModel user) {
+        this.user = user;
     }
 
     public void assignPost(PostModel post) {
