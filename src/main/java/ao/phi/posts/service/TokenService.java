@@ -26,7 +26,8 @@ public class TokenService {
 
 
     public boolean existToken(String token){
-        if(tokenRepository.findByToken(token)!=null){
+        //System.out.println(token);
+        if(tokenRepository.findByToken(token)==null){
             throw new IllegalStateException("Token does not Exist!");
         }
         return true;
@@ -36,7 +37,9 @@ public class TokenService {
         if (!existToken(token)){
             throw new IllegalStateException("Token does not Exist!");
         }
+        //System.out.println(token);
         TokenModel tokenModel= tokenRepository.findByToken(token);
+        //System.out.println(tokenModel.getExpiresAt());
         LocalDateTime expiredAt = tokenModel.getExpiresAt();
         if (expiredAt.isBefore(LocalDateTime.now(ZoneId.of("UTC")))){
             throw new IllegalStateException("Token expired!");

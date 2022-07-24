@@ -85,14 +85,14 @@ public class UserController {
     }
 
     //Confirm Registration
-    @PostMapping("/user/confirmed/{token}")
-    public ResponseEntity<UserModel> confirmRegistration(String token){
+    @GetMapping("/user/confirmed/{token}")
+    public ResponseEntity<String> confirmRegistration(@PathVariable(value = "token") String token){
         if(!tokenService.existToken(token)){
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
 
         TokenModel tokenModel = tokenService.getConfirmedByToken(token);
         UserModel userModel = userService.enableUserByTokenConfirmed(tokenModel.getUser().getUserId());
-        return new ResponseEntity<UserModel>(userModel, HttpStatus.OK);
+        return new ResponseEntity<String>("Confirmed", HttpStatus.OK);
     }
 }
