@@ -12,6 +12,7 @@ import java.util.UUID;
 @Entity
 @Table(name = "tb_role")
 public class RoleModel implements GrantedAuthority, Serializable {
+    private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID roleId;
@@ -19,7 +20,7 @@ public class RoleModel implements GrantedAuthority, Serializable {
     @Enumerated(EnumType.STRING)
     @Column(unique = true, nullable = false)
     private RoleName roleName;
-    private LocalDateTime createAt;
+    private LocalDateTime createdAt;
 
     @ManyToMany
     @JoinTable(name = "tb_users_roles",
@@ -48,12 +49,12 @@ public class RoleModel implements GrantedAuthority, Serializable {
         this.roleName = roleName;
     }
 
-    public LocalDateTime getCreateAt() {
-        return createAt;
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
     }
 
-    public void setCreateAt(LocalDateTime createAt) {
-        this.createAt = createAt;
+    public void setCreatedAt(LocalDateTime createAt) {
+        this.createdAt = createAt;
     }
 
 }

@@ -5,6 +5,7 @@ import org.springframework.hateoas.RepresentationModel;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 @Entity
 @Table(name = "tb_comment")
@@ -14,15 +15,11 @@ public class CommentModel extends RepresentationModel<PostModel> implements Seri
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long idcomment;
+    private UUID idcomment;
 
     @Column(nullable = false)
     private String description;
     private LocalDateTime createdAt;
-
-//    @ManyToOne(cascade = CascadeType.ALL)
-//    @JoinColumn(name = "idowner", referencedColumnName = "idowner")
-//    private OwnerModel owner;
 
     @ManyToOne()
     @JoinColumn(name = "userId")
@@ -32,11 +29,11 @@ public class CommentModel extends RepresentationModel<PostModel> implements Seri
     @JoinColumn(name = "postId", referencedColumnName = "postId")
     private PostModel post;
 
-    public Long getIdcomment() {
+    public UUID getIdcomment() {
         return idcomment;
     }
 
-    public void setIdcomment(Long idcomment) {
+    public void setIdcomment(UUID idcomment) {
         this.idcomment = idcomment;
     }
 

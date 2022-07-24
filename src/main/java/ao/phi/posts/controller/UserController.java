@@ -1,36 +1,98 @@
 package ao.phi.posts.controller;
 
+import ao.phi.posts.dto.PostDto;
+import ao.phi.posts.dto.UserDto;
+import ao.phi.posts.model.PostModel;
+import ao.phi.posts.model.TokenModel;
 import ao.phi.posts.model.UserModel;
 import ao.phi.posts.repository.UserRepository;
+import ao.phi.posts.service.TokenService;
+import ao.phi.posts.service.UserService;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.List;
+import java.util.UUID;
 
 @RestController
+@RequestMapping(path = "api/v1")
 public class UserController {
     @Autowired
     UserRepository userRepository;
 
-    @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_USER')")
+    @Autowired
+    UserService userService;
+
+    @Autowired
+    private TokenService tokenService;
+
+    BCryptPasswordEncoder bCryptPasswordEncoder;
+
+    //@PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_USER')")
     @GetMapping("/user")
-    public List<UserModel> showUser(){
+    public List<UserModel> showUser() {
         //List<OwnerModel> owners = ownerRepository.findAll();
         //if(owners.isEmpty()){
-            //return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        //return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         //}
         //return new ResponseEntity<List<OwnerModel>>(ownerRepository.findAll(), HttpStatus.OK);
         return userRepository.findAll();
-   }
+    }
 
-   @PreAuthorize("hasRole('ROLE_ADMIN')")
+    //@PreAuthorize("hasRole('ROLE_ADMIN')")
     @PostMapping("/user")
-    public UserModel saveUser(@RequestBody UserModel user){
+    public ResponseEntity<UserModel> saveUser(@RequestBody @Valid UserDto userDTO) {
+        var user = new UserModel();
+        BeanUtils.copyProperties(userDTO, user);
+        String encodedPassword = new BCryptPasswordEncoder().encode(user.getPassword());
+        user.setPassword(encodedPassword);
         user.setCreatedAt(LocalDateTime.now(ZoneId.of("UTC")));
-        //return new List<OwnerModel>(ownerRepository.save(owner), HttpStatus.CREATED) {
-        return userRepository.save(user);
+        //return userRepository.save(user);
+        return new ResponseEntity<UserModel>(userRepository.save(user), HttpStatus.CREATED);
+    }
+
+    @PostMapping("/user/signup")
+    public ResponseEntity<UserModel> signUpUser(@RequestBody @Valid UserDto userDTO) {
+        var user = new UserModel();
+        BeanUtils.copyProperties(userDTO, user);
+        String encodedPassword = new BCryptPasswordEncoder().encode(user.getPassword());
+        user.setPassword(encodedPassword);
+        user.setCreatedAt(LocalDateTime.now(ZoneId.of("UTC")));
+        //return userService.signUpUser(user);
+        var newUser = new UserModel();
+        newUser=userService.signUpUser(user);
+        //Create the token
+        TokenModel tokenModel = new TokenModel(
+                UUID.randomUUID().toString(),
+                newUser,
+                LocalDateTime.now(),
+                LocalDateTime.now().plusHours(1)
+        );
+        tokenService.save(tokenModel);
+
+        //sending email
+
+
+        return new ResponseEntity<UserModel>(newUser, HttpStatus.CREATED);
+    }
+
+    //Confirm Registration
+    @PostMapping("/user/confirmed/{token}")
+    public ResponseEntity<UserModel> confirmRegistration(String token){
+        if(!tokenService.existToken(token)){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+
+        TokenModel tokenModel = tokenService.getConfirmedByToken(token);
+        UserModel userModel = userService.enableUserByTokenConfirmed(tokenModel.getUser().getUserId());
+        return new ResponseEntity<UserModel>(userModel, HttpStatus.OK);
     }
 }

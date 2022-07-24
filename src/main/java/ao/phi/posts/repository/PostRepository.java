@@ -10,8 +10,8 @@ import java.util.List;
 import java.util.UUID;
 
 @Repository
-public interface PostRepository extends JpaRepository<PostModel, Long> {
-    PostModel findByIdPost(Long id);
+public interface PostRepository extends JpaRepository<PostModel, UUID> {
+    PostModel findByPostId(UUID id);
     //boolean existsByTitle(String title);
     //List<PostModel> findByIdOwner(UUID uuid);
 }

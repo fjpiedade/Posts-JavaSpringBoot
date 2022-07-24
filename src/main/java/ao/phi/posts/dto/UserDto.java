@@ -3,6 +3,7 @@ package ao.phi.posts.dto;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 import java.time.LocalDateTime;
 
 public class UserDto {
@@ -11,11 +12,18 @@ public class UserDto {
     private String name;
     @Email(message = "Email isn't valid")
     private String email;
-    private LocalDateTime createdAt;
-
     //Validation phone number
     //@Pattern(regexp = "^\\d{10}$")
-    //private String phoneNumber;
+
+    //@NotNull(message = "Name shouldn't be Null")
+    //@NotBlank(message = "Name shouldn't be Blank")
+    //private String username;
+
+    private String phone;
+    private String password;
+    private String avatar;
+    private boolean enabled = false;
+    private boolean locked = false;
 
     public String getName() {
         return name;
@@ -33,11 +41,51 @@ public class UserDto {
         this.email = email;
     }
 
-    public LocalDateTime getCreatedAt() {
-        return createdAt;
+    public String getPhone() {
+        return phone;
     }
 
-    public void setCreatedAt(LocalDateTime createdAt) {
-        this.createdAt = createdAt;
+    public void setPhone(String phone) {
+        this.phone = phone;
     }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public String getAvatar() {
+        return avatar;
+    }
+
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
+    }
+
+    public boolean isEnabled() {
+        return enabled;
+    }
+
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
+    }
+
+    public boolean isLocked() {
+        return locked;
+    }
+
+    public void setLocked(boolean locked) {
+        this.locked = locked;
+    }
+
+    //public String getUsername() {
+        //return username;
+    //}
+
+    //public void setUsername(String username) {
+        //this.username = username;
+    //}
 }

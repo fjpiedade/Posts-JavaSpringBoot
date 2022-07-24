@@ -9,6 +9,7 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.UUID;
 
 @Entity
 @Table(name = "tb_post")
@@ -17,7 +18,7 @@ public class PostModel extends RepresentationModel<PostModel> implements Seriali
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long postId;
+    private UUID postId;
 
     @Column(nullable = false, unique = true, length = 50)
     private String title;
@@ -34,11 +35,11 @@ public class PostModel extends RepresentationModel<PostModel> implements Seriali
     @OneToMany(mappedBy = "post")
     private Set<CommentModel> comment = new HashSet<>();
 
-    public Long getPostId() {
+    public UUID getPostId() {
         return postId;
     }
 
-    public void setPostId(Long postId) {
+    public void setPostId(UUID postId) {
         this.postId = postId;
     }
 

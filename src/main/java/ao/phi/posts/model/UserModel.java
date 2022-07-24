@@ -15,6 +15,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 @Entity
 @Table(name = "tb_user")
 public class UserModel implements UserDetails, Serializable {
+    private static final long serialVersionUID = 1L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -25,14 +26,22 @@ public class UserModel implements UserDetails, Serializable {
     @Column(unique = true, nullable = false)
     private String email;
 
+    //@Column(unique = true, nullable = false)
+    //private String username;
+
+    @Column(unique = true)
+    private String phone;
+
     @Column(nullable = false)
     private String password;
-
     private String avatar;
-
-    private boolean enabled;
-    private boolean locked;
+    private boolean enabled = false;
+    private boolean locked = false;
     private LocalDateTime createdAt;
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "user")
+    private Set<TokenModel> tokens = new HashSet<>();
 
     @ManyToMany
     @JoinTable(name = "tb_users_roles",
@@ -47,6 +56,9 @@ public class UserModel implements UserDetails, Serializable {
     @JsonIgnore
     @OneToMany(mappedBy = "user")
     private Set<CommentModel> comments = new HashSet<>();
+
+    public UserModel() {
+    }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -83,6 +95,14 @@ public class UserModel implements UserDetails, Serializable {
         return enabled;
     }
 
+    public UserModel(String name, String email, String phone, String password, String avatar) {
+        this.name = name;
+        this.email = email;
+        this.phone = phone;
+        this.password = password;
+        this.avatar = avatar;
+    }
+
     public UUID getUserId() {
         return userId;
     }
@@ -107,9 +127,21 @@ public class UserModel implements UserDetails, Serializable {
         this.email = email;
     }
 
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
     public void setPassword(String password) {
         this.password = password;
     }
+
+    //public void setUsername(String username) {
+        //this.username = username;
+    //}
 
     public String getAvatar() {
         return avatar;
@@ -139,13 +171,29 @@ public class UserModel implements UserDetails, Serializable {
         this.createdAt = createdAt;
     }
 
-    public List<RoleModel> getRoles() {
+    public Set<TokenModel> getTokens() {
+        return tokens;
+    }
+
+    public void setTokens(Set<TokenModel> tokens) {
+        this.tokens = tokens;
+    }
+
+    public Set<CommentModel> getComments() {
+        return comments;
+    }
+
+    public void setComments(Set<CommentModel> comments) {
+        this.comments = comments;
+    }
+
+    /*public List<RoleModel> getRoles() {
         return roles;
     }
 
     public void setRoles(List<RoleModel> roles) {
         this.roles = roles;
-    }
+    }*/
 
     public Set<PostModel> getPosts() {
         return posts;
