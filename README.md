@@ -1,7 +1,7 @@
 
 ## Java Spring Framework
 
-This project manager #Posts and #Comments its #Owner.
+This project manager #Posts and #Comments its #Owner. User and Role controle endpoints access. 
 Many aspects and features of the Spring platform have been richly implemented.
 
 - [x] Spring Boot 
