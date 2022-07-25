@@ -1,31 +1,28 @@
 package ao.phi.posts.controller;
 
-import ao.phi.posts.dtos.PostDto;
-import ao.phi.posts.model.OwnerModel;
+import ao.phi.posts.dto.PostDto;
 import ao.phi.posts.model.PostModel;
-import ao.phi.posts.repository.OwnerRepository;
+import ao.phi.posts.repository.UserRepository;
 import ao.phi.posts.repository.PostRepository;
 import ao.phi.posts.service.PostService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Sort;
-import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.awt.print.Pageable;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 @RestController
+@RequestMapping(path = "api/v1")
 @CrossOrigin(origins = "*", maxAge = 3600)
 public class PostController {
 
@@ -33,7 +30,7 @@ public class PostController {
     PostRepository postRepository;
 
     @Autowired
-    OwnerRepository ownerRepository;
+    UserRepository userRepository;
 
     @Autowired
     PostService postService;
@@ -45,7 +42,7 @@ public class PostController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         } else {
             for (PostModel post : postModelList) {
-                long id = post.getIdpost();
+                UUID id = post.getPostId();
                 post.add(linkTo(methodOn(PostController.class).getOnePost(id)).withSelfRel());
             }
         }
@@ -54,7 +51,7 @@ public class PostController {
     }
 
     @GetMapping("/posts/{id}")
-    public ResponseEntity<PostModel> getOnePost(@PathVariable(value = "id") long id) {
+    public ResponseEntity<PostModel> getOnePost(@PathVariable(value = "id") UUID id) {
         Optional<PostModel> postOne = postRepository.findById(id);
         if (postOne.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -71,7 +68,7 @@ public class PostController {
 //    }
 //
     @DeleteMapping("/posts/{id}")
-    public ResponseEntity<?> deletePost(@PathVariable(value = "id") Long id) {
+    public ResponseEntity<?> deletePost(@PathVariable(value = "id") UUID id) {
         Optional<PostModel> postDelete = postRepository.findById(id);
         if (postDelete.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -108,7 +105,7 @@ public class PostController {
 //        }
         var postModel = new PostModel();
         BeanUtils.copyProperties(postDto, postModel);
-        postModel.setRegisterDate(LocalDateTime.now(ZoneId.of("UTC")));
+        postModel.setCreatedAt(LocalDateTime.now(ZoneId.of("UTC")));
         return ResponseEntity.status(HttpStatus.CREATED).body(postService.save(postModel));
     }
 //
@@ -139,15 +136,15 @@ public class PostController {
 
     @PostMapping("/post/owner")
     public PostModel savePost(@RequestBody PostModel post) {
-        post.setRegisterDate(LocalDateTime.now(ZoneId.of("UTC")));
+        post.setCreatedAt(LocalDateTime.now(ZoneId.of("UTC")));
         return postRepository.save(post);
     }
 
     @PutMapping("post/{idpost}/owner/{idowner}")
-    public PostModel updatePostWithOwner(@PathVariable Long idpost, @PathVariable Long idowner) {
+    public PostModel updatePostWithOwner(@PathVariable UUID idpost, @PathVariable UUID idowner) {
         PostModel post = postRepository.findById(idpost).get();
-        OwnerModel owner = ownerRepository.findById(idowner).get();
-        post.assignOwner(owner);
+        //UserModel user = ownerRepository.findById(idowner).get();
+        //post.assignUser(user);
         return postRepository.save(post);
     }
 }

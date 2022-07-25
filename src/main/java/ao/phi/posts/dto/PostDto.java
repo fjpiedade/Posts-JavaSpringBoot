@@ -1,6 +1,6 @@
-package ao.phi.posts.dtos;
+package ao.phi.posts.dto;
 
-import ao.phi.posts.model.OwnerModel;
+import ao.phi.posts.model.UserModel;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
@@ -15,7 +15,7 @@ public class PostDto {
     private String description;
     private String link;
     private LocalDateTime registerDate;
-    private OwnerModel owner;
+    private UserModel user;
 
     public String getTitle() {
         return title;
@@ -49,11 +49,11 @@ public class PostDto {
         this.registerDate = registerDate;
     }
 
-    public OwnerModel getOwner() {
-        return owner;
+    public UserModel getUser() {
+        return user;
     }
 
-    public void setOwner(OwnerModel owner) {
-        this.owner = owner;
+    public void setUser(UserModel user) {
+        this.user = user;
     }
 }

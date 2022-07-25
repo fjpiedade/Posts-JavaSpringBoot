@@ -1,10 +1,9 @@
-package ao.phi.posts.dtos;
+package ao.phi.posts.dto;
 
 import ao.phi.posts.model.PostModel;
 
 import javax.validation.constraints.NotBlank;
 import java.time.LocalDateTime;
-import java.util.UUID;
 
 public class CommentDto {
     @NotBlank

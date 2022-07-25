@@ -16,11 +16,13 @@ import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 @RestController
+@RequestMapping(path = "api/v1")
 public class CommentController {
     @Autowired
     CommentRepository commentRepository;
@@ -44,7 +46,7 @@ public class CommentController {
             );
         } else {
             for (CommentModel comment : commentModelList) {
-                long id = comment.getIdcomment();
+                UUID id = comment.getIdcomment();
                 comment.add(linkTo(methodOn(CommentController.class).getOneComment(id)).withSelfRel());
             }
         }
@@ -63,7 +65,7 @@ public class CommentController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         } else {
             for (CommentModel comment : commentModelList) {
-                long id = comment.getIdcomment();
+                UUID id = comment.getIdcomment();
                 comment.add(linkTo(methodOn(CommentController.class).getOneComment(id)).withSelfRel());
             }
         }
@@ -71,7 +73,7 @@ public class CommentController {
     }
 
     @GetMapping("/comment/{id}")
-    public ResponseEntity<CommentModel> getOneComment(@PathVariable(value = "id") long id) {
+    public ResponseEntity<CommentModel> getOneComment(@PathVariable(value = "id") UUID id) {
         Optional<CommentModel> commentModel = commentRepository.findById(id);
         if (commentModel.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -82,15 +84,15 @@ public class CommentController {
 
     @PostMapping("/comment")
     public ResponseEntity<CommentModel> createComment(@RequestBody CommentModel comment) {
-        comment.setDateRegister(LocalDateTime.now(ZoneId.of("UTC")));
+        comment.setCreatedAt(LocalDateTime.now(ZoneId.of("UTC")));
         return new ResponseEntity<CommentModel>(commentRepository.save(comment), HttpStatus.OK);
     }
 
     @PutMapping("comment/{idcomment}/post/{idpost}")
-    public CommentModel updateCommentWithPost(@PathVariable Long idcomment, @PathVariable Long idpost) {
+    public CommentModel updateCommentWithPost(@PathVariable UUID idcomment, @PathVariable UUID idpost) {
         CommentModel comment = commentRepository.findById(idcomment).get();
         PostModel post = postRepository.findById(idpost).get();
-        comment.assignPost(post);
+        //comment.assignPost(post);
         return commentRepository.save(comment);
     }
 }

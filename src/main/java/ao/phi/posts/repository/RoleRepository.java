@@ -1,11 +1,11 @@
 package ao.phi.posts.repository;
 
-import ao.phi.posts.model.OwnerModel;
+import ao.phi.posts.model.RoleModel;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.UUID;
 
 @Repository
-public interface OwnerRepository extends JpaRepository<OwnerModel, Long> {
+public interface RoleRepository extends JpaRepository<RoleModel, UUID> {
 }
