@@ -5,6 +5,7 @@ import ao.phi.posts.dto.UserDto;
 import ao.phi.posts.model.PostModel;
 import ao.phi.posts.model.TokenModel;
 import ao.phi.posts.model.UserModel;
+import ao.phi.posts.repository.EmailSender;
 import ao.phi.posts.repository.UserRepository;
 import ao.phi.posts.service.TokenService;
 import ao.phi.posts.service.UserService;
@@ -35,6 +36,9 @@ public class UserController {
     private TokenService tokenService;
 
     BCryptPasswordEncoder bCryptPasswordEncoder;
+
+    @Autowired
+    EmailSender emailSender;
 
     //@PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_USER')")
     @GetMapping("/user")
@@ -68,7 +72,7 @@ public class UserController {
         user.setCreatedAt(LocalDateTime.now(ZoneId.of("UTC")));
         //return userService.signUpUser(user);
         var newUser = new UserModel();
-        newUser=userService.signUpUser(user);
+        newUser = userService.signUpUser(user);
         //Create the token
         TokenModel tokenModel = new TokenModel(
                 UUID.randomUUID().toString(),
@@ -79,15 +83,19 @@ public class UserController {
         tokenService.save(tokenModel);
 
         //sending email
+        String link = "http://localhost:9000/api/v1/user/confirm?token=" + tokenModel.getToken();
+        emailSender.send(
+                newUser.getEmail(),
+                userService.buildEmail(newUser.getName(), link));
 
 
         return new ResponseEntity<UserModel>(newUser, HttpStatus.CREATED);
     }
 
     //Confirm Registration
-    @GetMapping("/user/confirmed/{token}")
-    public ResponseEntity<String> confirmRegistration(@PathVariable(value = "token") String token){
-        if(!tokenService.existToken(token)){
+    @GetMapping(path = "/user/confirm")
+    public ResponseEntity<String> confirmRegistration(@RequestParam("token") String token) {
+        if (!tokenService.existToken(token)) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
 

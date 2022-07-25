@@ -30,11 +30,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 //.anyRequest().permitAll() //all request are permitted
                 .antMatchers(HttpMethod.GET,"/api/v1/user/**").hasRole("ADMIN")
-                .antMatchers(HttpMethod.POST,"/api/v1/user").hasRole("USER")
+                .antMatchers(HttpMethod.POST,"/api/v1/user").permitAll()
                 .antMatchers(HttpMethod.DELETE,"/api/v1/user/**").hasRole("ADMIN")
                 .antMatchers(HttpMethod.PUT,"/api/v1/user/**").hasRole("ADMIN")
                 .antMatchers(HttpMethod.GET,"/api/v1/post/**").hasRole("OWNER")
                 .antMatchers(HttpMethod.POST,"/api/v1/post/**").hasRole("OWNER")
+                .antMatchers(HttpMethod.GET,"http://localhost:9000/user/confirmed/**").permitAll()
                 .anyRequest().authenticated() //all request need authentications
                 .and()
                 .csrf().disable() //Permit Post, Put, and Delete
