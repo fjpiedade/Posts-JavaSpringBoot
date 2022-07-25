@@ -1,7 +1,7 @@
 
 ## Java Spring Framework
 
-This project manager #Posts and #Comments its #Owner. User and Role controle endpoints access. 
+This project manager #Posts and #Comments its #Owner. User and Authorization Rule controle endpoints access. 
 Many aspects and features of the Spring platform have been richly implemented.
 
 - [x] Spring Boot 
@@ -10,14 +10,14 @@ Many aspects and features of the Spring platform have been richly implemented.
 - [x] Spring Validation
 - [x] Spring Security
 
-- API RESTful based REST implementation (4 Level of Richardson Model ).
+- API RESTfull based REST implementation (4 Level of Richardson Model ).
 - Models [x] Owner [x] Post [x] Comment 
 - Repositories
 - Services
 - Controllers
 - DTOS
 - Global Configurations
-- 
+
 Feature implemented on this API REST
 
 - [x] Custom endpoints 
@@ -27,7 +27,7 @@ Feature implemented on this API REST
 - [x] Pagination and Sorting
 - [x] WebSecurity Adapter and SecurityFilterChain
 - [x] WebSecurity Controlle with User Data JPA, Rules.
-- [x] Login with Email confirmation, Token controle.
+- [x] Login with Email confirmation, Token controle, Authorizations Rules.
 
 
 Database Configuration for PostgreSQL Connectivity, auto-generator of migrations.
