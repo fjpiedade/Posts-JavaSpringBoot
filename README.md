@@ -9,6 +9,7 @@ Many aspects and features of the Spring platform have been richly implemented.
 - [x] Spring Data JPA
 - [x] Spring Validation
 - [x] Spring Security
+- [x] Unit Test (Mokito and MockMvc)
 
 - API RESTful based REST implementation (4 Level of Richardson Model ).
 - Models [x] Owner [x] Post [x] Comment 
@@ -28,7 +29,7 @@ Feature implemented on this API REST
 - [x] WebSecurity Adapter and SecurityFilterChain
 - [x] WebSecurity Controlle with User Data JPA, Rules.
 - [x] Login with Email confirmation, Token controle.
-
+- [x] TDD concepts of Unit Tests.
 
 Database Configuration for PostgreSQL Connectivity, auto-generator of migrations.
 
