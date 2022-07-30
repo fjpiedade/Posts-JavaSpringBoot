@@ -6,6 +6,7 @@ import ao.phi.posts.model.TokenModel;
 import ao.phi.posts.model.UserModel;
 import ao.phi.posts.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -20,6 +21,7 @@ import java.time.ZoneId;
 import java.util.Optional;
 import java.util.UUID;
 
+//@ComponentScan({"ao.phi.posts"})
 @Service
 public class UserService implements UserDetailsService {
 
@@ -58,6 +60,11 @@ public class UserService implements UserDetailsService {
                         new UsernameNotFoundException(String.format(USER_EMAIL_NOT_FOUND_MSG, email)));
         check = true;
         return check;
+    }
+
+    public String findByName(String name) {
+        Optional<UserModel> user = userRepository.findByName(name);
+        return user.get().getEmail();
     }
 
 
@@ -170,5 +177,9 @@ public class UserService implements UserDetailsService {
         } else {
             throw new IllegalStateException("User not founded with the id: " + id);
         }
+    }
+
+    public int numberOfDays(String phone) {
+        return 10;
     }
 }
