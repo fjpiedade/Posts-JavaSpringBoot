@@ -103,6 +103,22 @@ public class UserModel implements UserDetails, Serializable {
         this.avatar = avatar;
     }
 
+    public UserModel(UUID userId, String name, String email, String phone, String password, String avatar, boolean enabled, boolean locked, LocalDateTime createdAt, Set<TokenModel> tokens, List<RoleModel> roles, Set<PostModel> posts, Set<CommentModel> comments) {
+        this.userId = userId;
+        this.name = name;
+        this.email = email;
+        this.phone = phone;
+        this.password = password;
+        this.avatar = avatar;
+        this.enabled = enabled;
+        this.locked = locked;
+        this.createdAt = createdAt;
+        this.tokens = tokens;
+        this.roles = roles;
+        this.posts = posts;
+        this.comments = comments;
+    }
+
     public UUID getUserId() {
         return userId;
     }

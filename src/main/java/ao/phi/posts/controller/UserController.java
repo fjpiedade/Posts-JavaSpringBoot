@@ -24,7 +24,7 @@ import java.util.List;
 import java.util.UUID;
 
 @RestController
-@RequestMapping(path = "api/v1")
+@RequestMapping("/api/v1")
 public class UserController {
     @Autowired
     UserRepository userRepository;
@@ -41,7 +41,7 @@ public class UserController {
     EmailSender emailSender;
 
     //@PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_USER')")
-    @GetMapping("/user")
+    @GetMapping("/user/v1")
     public List<UserModel> showUser() {
         //List<OwnerModel> owners = ownerRepository.findAll();
         //if(owners.isEmpty()){
@@ -102,5 +102,10 @@ public class UserController {
         TokenModel tokenModel = tokenService.getConfirmedByToken(token);
         UserModel userModel = userService.enableUserByTokenConfirmed(tokenModel.getUser().getUserId());
         return new ResponseEntity<String>("Confirmed", HttpStatus.OK);
+    }
+
+    @GetMapping("/users")
+    public String getAll(){
+        return "Ok";
     }
 }
