@@ -1,0 +1,10 @@
+server:
+  port: 9000
+spring:
+  datasource:
+    url: jdbc:postgresql://${POSTGRES_HOST:localhost}:${POSTGRES_PORT:5432}/posts
+    username: ${POSTGRES_USER:postgres}
+    password: ${POSTGRES_PASSWORD:NoK.21}
+  jpa:
+    hibernate:
+      ddl-auto: update
